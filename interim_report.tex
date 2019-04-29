@@ -38,10 +38,11 @@
 \usepackage{caption}
 \captionsetup[lstlisting]{labelfont=bf}
 
-\usepackage{minted}
+\usepackage[cache=false]{minted}
 \usemintedstyle{colorful}
 \setminted[sql]{frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize, linenos}
 \setminted[python]{frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize, linenos}
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
 
 % See https://texfaq.org/FAQ-casechange
 \usepackage[overload]{textcase}
@@ -54,31 +55,31 @@
 \newglossaryentry{Real}
 {
     name=Real Energy Consumption,
-    description={real power is the actual power consumed by the equipment to do useful work. It is distinguished from apparent power by eliminating the reactive power component that may be present}
+    description={is the actual power consumed by the equipment to do useful work. It is distinguished from apparent power by eliminating the reactive power component that may be present}
 }
 
 \newglossaryentry{Reactive}
 {
     name=Reactive Energy Consumption,
-    description={reactive power \ldots}
+    description={is the actual energy consumed by the equipment to do useful work. It is distinguished from apparent power by eliminating the reactive power component that may be present}
 }
 
 \newglossaryentry{Apparent}
 {
     name=Apparent Energy Consumption,
-    description={The combination of reactive power and real power is called apparent power, and it is the product of a circuit's voltage and current, without reference to phase angle. Apparent power is measured in the unit of Volt-Amps (VA) and is symbolized by the capital letter S}
+    description={is the combination of reactive power and real power is called apparent energy, and it is the product of a circuit's voltage and current, without reference to phase angle. Apparent energy is measured in the unit of Volt-Amps (VA) and is symbolized by the capital letter S}
 }
 
 \newglossaryentry{Power}
 {
     name=Power Factor,
-    description={Power Factor (PF) is the ratio between 0 and 1 of real power (kW) to apparent power (kVA)}
+    description={(PF) is the ratio between 0 and 1 of real power (kW) to apparent power (kVA)}
 }
 
 \newglossaryentry{LCP}
 {
     name=LCP Cooling Capacity,
-    description={The capacity of the Liquid Cooling Package to cool a rack in a Data Centre(LCP}
+    description={is the capacity of the Liquid Cooling Package to cool a rack in a Data Centre}
 }
 
 
@@ -126,9 +127,9 @@
 \newpage
 \listoffigures
 \newpage
-\lstlistoflistings % needs the listings package
+%\lstlistoflistings % needs the listings package
 \newpage
-\renewcommand\listoflistingscaption{List of source codes}
+\renewcommand\listoflistingscaption{List of Source Codes}
 \listoflistings % needs the inbuilt listings environment of LaTeX; comment out the listings package stuff above otherwise nothing appears here
 \newpage
 \pagenumbering{arabic}
@@ -415,7 +416,7 @@ Similar to most modern Data Centres, sensors and the use of network devices are 
     \includegraphics[scale=0.45]{TSSG_Data_Schema}
 \end{figure}
 
-As we see from the schema, the data captures a multitude of metered energy usage variables, different weather data, and temperature and water usage data. A full detailed definition of the key metrics is provided in the appendices - section \ref{sec:[Definition of key Variables]}. The data outlined here is available from 2014 right up to present, captured at 5 minute intervals, making this a time series data set. In the next section, the data is explored at an initial level to find any seasonal trends or predictive variables. 
+As we see from the schema, the data captures a multitude of metered energy usage variables, different weather data, and temperature and water usage data. A full detailed definition of the key metrics is provided in Glossary. The data outlined here is available from 2014 right up to present, captured at 5 minute intervals, making this a time series data set. In the next section, the data is explored at an initial level to find any seasonal trends or predictive variables. 
  
 \subsection{Exploratory Data Analysis}
 \label{subsec:[Exploratory Data Analysis]}
@@ -529,7 +530,7 @@ With such a vast array of information available, as earlier demonstrated in sect
 \end{figure} 
 
 %While full definitions of the key variables are defined in the appendices - section \ref{sec:[Definition of key Variables]}, the following diagram describes and outlines the relationship between Real Energy Consumption, Reactive Energy Consumption, Apparent Energy Consumption and Power Factor. 
-While full definitions of the key variables are defined in the appendices - section \ref{sec:[Definition of key Variables]}, the following diagram describes and outlines the relationship between \gls{Real}, \gls{Reactive}, \gls{Apparent} and \gls{Power}. 
+The following diagram describes and outlines the relationship between \gls{Real}, \gls{Reactive}, \gls{Apparent} and \gls{Power}. 
 
 \begin{figure}[h]
   \caption{The Latte Definition of Different Energy Metrics}
@@ -562,15 +563,15 @@ The process to identify 'interesting' or 'useful' correlations was manual. Havin
 Some correlations between variables were easily explained, such as the relationship between different energy variables but the following are the initial findings:    
 
 \begin{itemize}
-\item There is a strong correlation between Humidity (but not temperature) and Real Energy Consumption, Apparent Energy Consumption and Reactive Energy Consumption.
-\item There is a high correlation between Apparent Energy Consumption and Real Energy Consumption. This indicates that there is a relatively stable amount of reactive power generated at each meter.
+\item There is a strong correlation between Humidity (but not temperature) and \gls{Real}, \Gls{Apparent} and \Gls{Reactive}.
+\item There is a high correlation between \Gls{Apparent} and \Gls{Real}. This indicates that there is a relatively stable amount of reactive power generated at each meter.
 \item There is a high amount of correlation between Real power total and Last time kw.
 \item In terms of analysing the different performances of the chillers, out of 2103 correlations, 2089 are identical for both Chiller 1 and Chiller 2. The main difference centres around some correlations for Chiller 2 and the \gls{LCP} and server temp differences between cabinets 23/24 and 25/26.
 \item Similarly, the water in temp and server in temp of the locations (between cabinets 23/24, 24/25, and 25/26) is highly correlated with the water in temp and server in temp of some locations between rows 2,3 and 4.
-\item In terms of cross-correlations between meter id’s and LCP locations, there is a high correlation between Real Energy Consumption of most meter id’s and 5 particular \gls{LCP} variables that is very consistent.
+\item In terms of cross-correlations between meter id’s and LCP locations, there is a high correlation between \Gls{Real} of most meter id’s and 5 particular \gls{LCP} variables that is very consistent.
 \end{itemize}  
 
-Full details of the correlation analysis, including a definition of the key variables discussed are found in the Appendices - sections \ref{sec:[Definition of key Variables]} and \ref{sec:[Correlation Analysis Results]}
+Full details of the correlation analysis, including a definition of the key variables discussed are found in the \ref{sec:[Correlation Analysis Results]} and the Glossary. 
 
 \subsubsection{Meet with Data Centre Administrators}
 \label{subsubsec:[Meet with Data Centre Administrators]}
@@ -587,7 +588,7 @@ Therefore, from the Data Administrator's perspective their stated priority is to
 \subsubsection{Construct Predictive Model}
 \label{subsubsec:[Construct Predictive Model]}
 
-As per the \ref{subsec:[Research Questions]}, there are two distinct aspects of this work. Predicting energy usage and anomaly detection. In terms of predicting energy usage, the outcome of the correlation analysis allows us to use the variables identified to build a predictive model. At this stage, the data appears to intimate that humidity is correlated to an increase in energy consumption. This could be used along with some other variables to build a function to predict energy consumption, thus essentially becoming a regression problem. 
+As per the section \ref{subsec:[Research Questions]}, there are two distinct aspects of this work. Predicting energy usage and anomaly detection. In terms of predicting energy usage, the outcome of the correlation analysis allows us to use the variables identified to build a predictive model. At this stage, the data appears to intimate that humidity is correlated to an increase in energy consumption. This could be used along with some other variables to build a function to predict energy consumption, thus essentially becoming a regression problem. 
 
 From the correlation analysis, the main variables to build such a model would be humidity, The server temp diff Row 3 - Outer edge of Cab 12, water flow Between Cab 23 and Cab 24 and lcp cooling capacity Between Cab 23, Cab 24 and Cab 25
 
@@ -645,7 +646,7 @@ Finally, in terms of the reasoning applied, this project with Data Mining at its
 \newpage
 \printbibliography[heading=bibintoc]
 \newpage
-%\glsaddall
+\glsaddall
 \printglossary
 \newpage
 \appendix
@@ -656,9 +657,8 @@ Finally, in terms of the reasoning applied, this project with Data Mining at its
 \label{sec:[MySQL Queries]}
 This section provides the MySQL queries used to source the data for the line charts in Figures \ref{fig:Annualenergyfigure}, \ref{fig:Dailyenergyfigure}, \ref{fig:cabvchillerfigure}, \ref{fig:annualwaterfigure} and \ref{fig:opheliafigure}.
 
-%\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-%  caption={MySQL Query for Annual Energy Consumption},label={list:[Annual Energy Consumption]}]
-\begin{listing}[ht]
+
+\begin{listing}[H]
 \begin{minted}{sql}
 use dc; 
 select * 
@@ -674,18 +674,21 @@ and meter_id not in ('1','2','3','4','5','6','7','8','9','10','11',
 \end{listing}
 %\end{lstlisting}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={MySQL Query for Daily Energy Consumption},label={list:[Daily Energy Consumption]}]
+\begin{listing}[H]
+\begin{minted}{sql}
 use dc; 
 select * 
 from meters_data
 where meter_reading_time > '2017-09-12'
 and meter_reading_time < '2017-09-14'
 where meter_id in ('13','14','15');
-\end{lstlisting}
+\end{minted}
+\caption{MySQL Query for Daily Energy Consumption}
+\label{list:[Annual Energy Consumption]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={MySQL Query for Annual Energy Consumption of Chillers and Server},label={list:[Annual Energy Consumption of Chillers and Server]}]
+\begin{listing}[H]
+\begin{minted}{sql}
 use dc; 
 select * 
 from meters_data
@@ -694,10 +697,13 @@ and meter_reading_time < '2017-12-31'
 and HOUR(`meter_reading_time`) = 9
 and MINUTE(`meter_reading_time`) = 0
 and meter_id in ('3','4','13');
-\end{lstlisting}
+\end{minted}
+\caption{MySQL Query for Annual Energy Consumption of Chillers and Server}
+\label{list:[MySQL Query for Annual Energy Consumption of Chillers and Server]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={MySQL Query for Annual Water Flow},label={list:[Annual Water Flow]}]
+\begin{listing}[H]
+\begin{minted}{sql}
 use dc; 
 select * 
 from lcps_data
@@ -705,62 +711,84 @@ where lcp_reading_time > '2017-01-01'
 and lcp_reading_time < '2017-12-31' 
 and HOUR(`lcp_reading_time`) = 9
 and MINUTE(`lcp_reading_time`) = 0;
-\end{lstlisting}
+\end{minted}
+\caption{MySQL Query for Annual Water Flowr}
+\label{list:[MySQL Query for Annual Water Flow]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={MySQL Query for Energy Consumption of the Generator during Storm Ophelia},label={list:[Energy Consumption of the Generator during Storm Ophelia]}]
+\begin{listing}[H]
+\begin{minted}{sql}
 use dc; 
 select * 
 from meters_data
 where meter_reading_time > '2017-10-10'
 and meter_reading_time < '2017-10-24'
 and meter_id = '2';
-\end{lstlisting}
+\end{minted}
+\caption{MySQL Query for Energy Consumption of the Generator during Storm Ophelia}
+\label{list:[MySQL Query for Energy Consumption of the Generator during Storm Ophelia]}
+\end{listing}
 
 \section{MySQL Queries for Detailed Data Analysis}
 \label{sec:[Detailed MySQL Queries]}
 This section provides the MySQL queries used to source the data for section \ref{subsubsec:[Import Data From Data Centre]}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={MySQL Query for Energy Consumption in 2017},label={list:[Energy Consumption in 2017]}]
+\begin{listing}[H]
+\begin{minted}{sql}
 use dc; 
 select * 
 from meters_data
 where meter_reading_time > '2017-01-01'
 and meter_reading_time < '2017-12-31';
-\end{lstlisting}
+\end{minted}
+\caption{MySQL Query for Energy Consumption in 2017}
+\label{list:[MySQL Query for Energy Consumption in 2017]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={MySQL Query for All Meter ID Location},label={list:[All Meter ID Location]}]
+\begin{listing}[H]
+\begin{minted}{sql}
 use dc; 
 select * 
 from meters_master;
-\end{lstlisting}
+\end{minted}
+\caption{MySQL Query for All Meter ID Location}
+\label{list:[MySQL Query for All Meter ID Location]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={MySQL Query for LCP information for 2017},label={list:[LCP information for 2017]}]
+\begin{listing}[H]
+\begin{minted}{sql}
 use dc; 
 select * 
 from lcps_data
 where lcp_reading_time > '2017-01-01'
 and lcp_reading_time < '2017-12-31';
-\end{lstlisting}
+\end{minted}
+\caption{MySQL Query for LCP information for 2017}
+\label{list:[MySQL Query for LCP information for 2017]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={MySQL Query for LCP Location Information},label={list:[LCP Location Information]}]
+
+\begin{listing}[H]
+\begin{minted}{sql}
 use dc; 
 select * 
 from lcps_master;
-\end{lstlisting}
+\end{minted}
+\caption{MySQL Query for LCP Location Information}
+\label{list:[MySQL Query for LCP Location Information]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={MySQL Query for Weather Data for 2017},label={list:[Weather Data for 2017]}]
+\begin{listing}[H]
+\begin{minted}{sql}
 use dc; 
 select * 
 from weather_data
 where weather_reading_time > '2017-01-01'
 and weather_reading_time < '2017-12-31';
-\end{lstlisting}
+\end{minted}
+\caption{MySQL Query for Weather Data for 2017}
+\label{list:[MySQL Query for Weather Data for 2017]}
+\end{listing}
 
 \section{Python Code for Data Manipulation}
 \label{sec:[Python Code]}
@@ -768,7 +796,7 @@ This section provides Python code to cleanse, manipulate and derive correlations
 
 %\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
 %  caption={Python - Set Up and Configuration},label={list:[Python - Set up and Configuration]}]
-\begin{listing}
+\begin{listing}[H]
 \begin{minted}{python}
 import numpy as np
 import pandas as pd
@@ -790,8 +818,8 @@ return "{0:.2f} MB".format(sys.getsizeof(obj) / (1000 * 1000))
 \end{listing}
 %\end{lstlisting}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Import and Cleanse Energy Data},label={list:[Import and Merge Data]}]
+\begin{listing}[H]
+\begin{minted}{python}
 energyusagepython = pd.read_csv("data/energyusagepython.csv")
 
 metersmaster = pd.read_csv("data/metersmaster.csv")
@@ -819,10 +847,13 @@ energy_regression.columns = ['dc_reading_time','meter_location',
 'reactive_power_total',
 'power_factor']
 
-\end{lstlisting}
+\end{minted}
+\caption{Python - Import and Cleanse Energy Data}
+\label{list:[Python - Import and Cleanse Energy Data]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Pivot Data around the meter reading time},label={list:[Pivot Data around the meter reading time]}]
+\begin{listing}[H]
+\begin{minted}{python}
 last_time_period_kilowatts_corr = energy_regression.pivot_table
 (index='dc_reading_time',
 columns='meter_location',
@@ -836,10 +867,13 @@ last_time_period_kilowatts_corr.columns =
     
 The same process was followed for all energy variables.
 
-\end{lstlisting}
+\end{minted}
+\caption{Python - Pivot Data around the meter reading time}
+\label{list:[Python - Pivot Data around the meter reading time]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Merge Energy Pivot Tables together},label={list:[Merge Pivot Tables together]}]
+\begin{listing}[H]
+\begin{minted}{python}
 last_time_period_kilowatts_corr.reset_index( inplace=True)
 real_energy_consumption_corr.reset_index( inplace=True)
 total_energy_info_1 = last_time_period_kilowatts_corr.merge
@@ -869,10 +903,13 @@ power_factor_corr.reset_index( inplace=True)
 total_energy_info_final = power_factor_corr.merge
 (total_energy_info_6, on="dc_reading_time")
 
-\end{lstlisting}
+\end{minted}
+\caption{Python - Merge Energy Pivot Tables together}
+\label{list:[Python - Merge Energy Pivot Tables together]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Import and Merge LCP Data},label={list:[Import and Merge LCP Data]}]
+\begin{listing}[H]
+\begin{minted}{python}
 lcpdata2017 = pd.read_csv("data/lcpdata2017.csv")
 print("lcpdata2017 -- dimensions: {0};   size: {1}".format
 (lcpdata2017.shape, size(lcpdata2017)))
@@ -908,11 +945,14 @@ lcp_regression.columns = ['dc_reading_time',
 'server_temp_diff',
 'water_temp_diff']
 
+\end{minted}
+\caption{Python - Import and Merge LCP Data}
+\label{list:[Python - Import and Merge LCP Data]}
+\end{listing}
 
-\end{lstlisting}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Pivot Data around the LCP reading time},label={list:[Pivot Data around the LCP reading time]}]
+\begin{listing}[H]
+\begin{minted}{python}
 _lcp_cooling_capacity = lcp_regression.pivot_table
 (index='dc_reading_time',columns='lcp_location',values=
 '_lcp_cooling_capacity')
@@ -925,10 +965,13 @@ _lcp_cooling_capacity.columns =
     
 The same process was followed for all LCP variables.
 
-\end{lstlisting}
+\end{minted}
+\caption{Python - Pivot Data around the LCP reading time}
+\label{list:[Python - Pivot Data around the LCP reading time]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Merge LCP Pivot Tables together},label={list:[Merge LCP Pivot Tables together]}]
+\begin{listing}[H]
+\begin{minted}{python}
 _lcp_cooling_capacity.reset_index( inplace=True)
 server_in_temp.reset_index( inplace=True)
 lcp_info_1 = _lcp_cooling_capacity.merge(server_in_temp, 
@@ -958,10 +1001,13 @@ water_temp_diff.reset_index( inplace=True)
 lcp_info_final = water_temp_diff.merge(lcp_info_6, 
 on="dc_reading_time")
 
-\end{lstlisting}
+\end{minted}
+\caption{Python - Merge LCP Pivot Tables together}
+\label{list:[Python - Merge LCP Pivot Tables together]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Import and Merge Weather Data},label={list:[Import and Merge Weather Data]}]
+\begin{listing}[H]
+\begin{minted}{python}
 weatherdata = pd.read_csv("data/weatherdata.csv")
 
 weatherdata.columns = ['weather_id',
@@ -987,10 +1033,13 @@ revised_weatherdata = weatherdata[['dc_reading_time',
 'wind_speed']]
 
 
-\end{lstlisting}
+\end{minted}
+\caption{Python - Import and Merge Weather Data}
+\label{list:[Python - Import and Merge Weather Data]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Merge all Data Together into one table},label={list:[Merge all Data Together into one table]}]
+\begin{listing}[H]
+\begin{minted}{python}
 final_data_merge_1 
 = total_energy_info_final.merge
 (lcp_info_final, on="dc_reading_time")
@@ -1003,10 +1052,13 @@ final_data.to_csv("final_data.csv",
 index=False, header=True)
 
 
-\end{lstlisting}
+\end{minted}
+\caption{Python - Merge all Data Together into one table}
+\label{list:[Python - Merge all Data Together into one table]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Get Correlations between all Variables},label={list:[Get Correlations between all Variables]}]
+\begin{listing}[H]
+\begin{minted}{python}
 final_data_correlations = final_data.corr()
 
 final_data_correlations.to_csv
@@ -1014,10 +1066,13 @@ final_data_correlations.to_csv
 index=False, header=True)
 
 
-\end{lstlisting}
+\end{minted}
+\caption{Python - Get Correlations between all Variables}
+\label{list:[Python - Get Correlations between all Variables]}
+\end{listing}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Analyse Correlations in Python},label={list:[Analyse Correlations in Python]}]
+\begin{listing}[H]
+\begin{minted}{python}
 def get_redundant_pairs(final_data_correlations):
     '''Get diagonal and lower triangular pairs of correlation matrix'''
     pairs_to_drop = set()
@@ -1045,19 +1100,22 @@ Top_correlations.to_csv
 index=True, header=True)
 
 
-\end{lstlisting}
+\end{minted}
+\caption{Python - Analyse Correlations in Python}
+\label{list:[Python - Analyse Correlations in Python]}
+\end{listing}
 
-\section{Definition of Key Variables}
-\label{sec:[Definition of key Variables]}
+%\section{Definition of Key Variables}
+%\label{sec:[Definition of key Variables]}
 
-This section provides definitions of key variables as discussed in section \ref{subsubsec:[Analyse Correlations]}
+%This section provides definitions of key variables as discussed in section \ref{subsubsec:[Analyse Correlations]}
 
-\begin{figure}[h]
-  \caption{Definition of key Variables from the Monitoring Data}
-  \label{fig:key_variables}
-  \centering
-    \includegraphics[scale=0.75]{key_variables}
-\end{figure} 
+%\begin{figure}[h]
+% \caption{Definition of key Variables from the Monitoring Data}
+%  \label{fig:key_variables}
+%  \centering
+%    \includegraphics[scale=0.75]{key_variables}
+%\end{figure} 
 
 
 \section{Detailed Correlation Analysis Results}
