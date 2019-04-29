@@ -27,7 +27,7 @@
             doi=false,
 %            backref=true,
             maxcitenames=3,
-            block=none]{biblatex}
+            block=ragged]{biblatex}
 \addbibresource{refs/thesisbibliointerimreport.bib}
 
 \usepackage[colorinlistoftodos]{todonotes} % remove draft option in \documentclass to disable this package
@@ -37,6 +37,11 @@
 \lstset{backgroundcolor=\color{pale-gray},language=SQL}
 \usepackage{caption}
 \captionsetup[lstlisting]{labelfont=bf}
+
+\usepackage{minted}
+\usemintedstyle{colorful}
+\setminted[sql]{frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize, linenos}
+\setminted[python]{frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize, linenos}
 
 % See https://texfaq.org/FAQ-casechange
 \usepackage[overload]{textcase}
@@ -54,8 +59,8 @@
 
 \newglossaryentry{Reactive}
 {
-    name=Real Energy Consumption,
-    description={real power is the actual power consumed by the equipment to do useful work. It is distinguished from apparent power by eliminating the reactive power component that may be present}
+    name=Reactive Energy Consumption,
+    description={reactive power \ldots}
 }
 
 \newglossaryentry{Apparent}
@@ -64,14 +69,11 @@
     description={The combination of reactive power and real power is called apparent power, and it is the product of a circuit's voltage and current, without reference to phase angle. Apparent power is measured in the unit of Volt-Amps (VA) and is symbolized by the capital letter S}
 }
 
-
-
 \newglossaryentry{Power}
 {
     name=Power Factor,
     description={Power Factor (PF) is the ratio between 0 and 1 of real power (kW) to apparent power (kVA)}
 }
-
 
 \newglossaryentry{LCP}
 {
@@ -125,6 +127,9 @@
 \listoffigures
 \newpage
 \lstlistoflistings % needs the listings package
+\newpage
+\renewcommand\listoflistingscaption{List of source codes}
+\listoflistings % needs the inbuilt listings environment of LaTeX; comment out the listings package stuff above otherwise nothing appears here
 \newpage
 \pagenumbering{arabic}
 
@@ -235,7 +240,7 @@ Figure~\ref{fig:DCenergy} from \citep{edsdoj.99f37e7899fb4fcaabdaa81e395626c4201
   \caption{How Energy is Consumed in a Data Centre.}
   \label{fig:DCenergy}
   \centering
-    \includegraphics[scale=0.35]{Data_center_energy.png}
+    \includegraphics[scale=0.35]{Data_center_energy}
 \end{figure}
 
 %Currently, In terms of energy consumption, the entire Information and Communication Technology (ICT) sector including Data Centres now generates up to 2\% of the global CO2 emissions, which is on a par with the aviation industry.
@@ -248,7 +253,7 @@ Figure~\ref{fig:DCenergyEU-US}, reproduced from \citet{edsbas.13818AC20170101} s
   \caption{Energy Consumption of Data Centres in the EU and US from 2000 to currently.}
   \label{fig:DCenergyEU-US}
   \centering
-    \includegraphics[scale=0.45]{Energy_consumption.png}
+    \includegraphics[scale=0.45]{Energy_consumption}
 \end{figure}
 
 With Data Centres consuming more energy, there is an obvious incentive, both from a cost and a green perspective, to reduce energy consumption per Data Centre. This can be done by making Data Centres more efficient for the energy they consume and the measurement that is used to measure energy efficiency is the \emph{Power Usage Efficiency} (PUE) score. This is described as
@@ -264,14 +269,14 @@ In terms of the current trends of energy usage, research by \citet{edsbas.13818A
   \caption{The average PUE across different locations.}
   \label{fig:PUE-by-location}
   \centering
-    \includegraphics[scale=0.45]{geographical_zoning.png}
+    \includegraphics[scale=0.45]{geographical_zoning}
 \end{figure}
 
 \begin{figure}[h]
   \caption{The average PUE from 2000 to currently.}
   \label{fig:PUE-by-year}
   \centering
-    \includegraphics[scale=0.35]{Average_PUE_per_reporting_year.png}
+    \includegraphics[scale=0.35]{Average_PUE_per_reporting_year}
 \end{figure}
  
 So the challenge, as outlined in the various literature below (section \ref{subsec:[Improving Data Centre Energy Efficiency]}), is how to make a Data Centre more energy efficient by maximizing the energy used for IT equipment and reducing the consumption of energy by non-IT equipment. 
@@ -293,7 +298,7 @@ Figure~\ref{fig:TSSGdataCentreDesign}, provided from \citet{TSSG} demonstrates t
   \caption{The design of the WIT-TSSG Data Centre.}
   \label{fig:TSSGdataCentreDesign}
   \centering
-    \includegraphics[scale=0.35]{TSSG_Diagram.png}
+    \includegraphics[scale=0.35]{TSSG_Diagram}
 \end{figure}
 
 From this diagram we see that there are 26 Cabinets and these use varying degrees of KW per cabinet to house over 160 servers. In addition, the Data Centre is designed so that there are separate rooms for servers, networking equipment, UPS and batteries with the generator and cooling equipment outside. This is to optimise the best cooling option for each room, resulting in the server room not having any hot or cold aisles. Instead, all heat and cooling is contained inside the 26 cabinets \citep{TSSG}.
@@ -407,7 +412,7 @@ Similar to most modern Data Centres, sensors and the use of network devices are 
   \caption{The schema of the WIT-TSSG Data Centre.}
   \label{fig:TSSGdataschema}
   \centering
-    \includegraphics[scale=0.45]{TSSG_Data_Schema.png}
+    \includegraphics[scale=0.45]{TSSG_Data_Schema}
 \end{figure}
 
 As we see from the schema, the data captures a multitude of metered energy usage variables, different weather data, and temperature and water usage data. A full detailed definition of the key metrics is provided in the appendices - section \ref{sec:[Definition of key Variables]}. The data outlined here is available from 2014 right up to present, captured at 5 minute intervals, making this a time series data set. In the next section, the data is explored at an initial level to find any seasonal trends or predictive variables. 
@@ -422,7 +427,7 @@ The schema introduced in Figure \ref{fig:TSSGdataschema} outlines the vast scale
   \caption{Energy consumption (in kW usage per 5 minute intervals) of one cabinet in the Data Centre over the entire year of 2017.}
   \label{fig:Annualenergyfigure}
   \centering
-    \includegraphics[scale=0.30]{Annual_energy_consumption.png}
+    \includegraphics[scale=0.30]{Annual_energy_consumption}
 \end{figure}
 
 Figure \ref{fig:Annualenergyfigure}, generated using Listing~\ref{list:[Annual Energy Consumption]}, illustrates the energy consumption of one particular server cabinet within the Data Centre (Cabinet 26A) over the course of 2017. The daily readings are taken from between 9am and 10am each day and while the chart may initially suggest that the energy usage has been relatively consistent, there are significant spikes in energy consumption in April and August, with some considerable drops in demand too. The Research Techniques section (\ref{subsec:[Research Techniques]}) will outline how this study investigates if these spikes can be predicted so that another cabinet could share some of the load to reduce energy consumption within the Data Centre.
@@ -433,7 +438,7 @@ However, while Figure \ref{fig:Annualenergyfigure} was a snapshot of energy usag
   \caption{Energy consumption (in kW usage per 5 minute intervals) of three different server cabinets in the Data Centre over the course of one day (2017-09-13).}
   \label{fig:Dailyenergyfigure}
   \centering
-    \includegraphics[scale=0.35]{Daily_energy_consumption_of_cab131415.png}
+    \includegraphics[scale=0.35]{Daily_energy_consumption_of_cab131415}
 \end{figure}
    
 Figure \ref{fig:Dailyenergyfigure} reports significant spikes in energy consumption in two of the cabinets around 11am. Again, this is another example of how Data Mining techniques might be applied to assist in being able to predict when such spikes occur. 
@@ -444,7 +449,7 @@ While certain spikes in energy consumption might be suitable for further investi
   \caption{Energy consumption (in kW usage per 5 minute intervals) of both Chillers and one server cabinet in the Data Centre over the course of 2017}
   \label{fig:cabvchillerfigure}
   \centering
-    \includegraphics[scale=0.45]{Energy_consumption_of_cab26_and_chillers.png}
+    \includegraphics[scale=0.45]{Energy_consumption_of_cab26_and_chillers}
 \end{figure} 
 
 It is from presenting this information to Michael Kugel and John Ronan who work in the Data Centre, where the impetus came to specifically concentrate on the inefficiency of the chiller system. It was their 'hunch' that such inefficiencies existed, and it was these discussions that spawned the third research question (in section \ref{subsec:[Research Questions]}) and possible further investigation as outlined in sectio/ \ref{subsubsec:[Further Analysis of the Chiller System]}.   
@@ -455,14 +460,14 @@ Other interesting preliminary analysis of the data centred around water consumpt
   \caption{Annual water flow (in litres per 5 minute intervals) to LCP 1 measured at 9am every day during 2017}
   \label{fig:annualwaterfigure}
   \centering
-    \includegraphics[scale=0.45]{Annual_Water_Flow.png}
+    \includegraphics[scale=0.45]{Annual_Water_Flow}
 \end{figure} 
 
 \begin{figure}[h]
   \caption{Energy consumption (in kW usage per 5 minute intervals) of the Generator before, during and after Storm Ophelia in October 15th 2017}
   \label{fig:opheliafigure}
   \centering
-    \includegraphics[scale=0.50]{Ophelia_generator.png}
+    \includegraphics[scale=0.50]{Ophelia_generator}
 \end{figure} 
 
 All these charts are provided to simply demonstrate the range of data available. The next section discusses how this data was screened to build a predictive model and the challenges that arise from this.  
@@ -494,7 +499,7 @@ The plan of work, as originally proposed, for this project is outlined in the Ga
   \caption{Project Plan for 2018-2019.}
   \label{fig:projectplan}
   \centering
-    \includegraphics[scale=0.45]{"Gannt_Chart_schedule_of_work".png}
+    \includegraphics[scale=0.45]{Gannt_Chart_schedule_of_work}
 \end{figure}
 
 \subsection{Progress Since Proposal}
@@ -509,7 +514,7 @@ The first step was to retrieve the monitoring data for 2017 that is stored on th
 
 Caption \ref{fig:TSSGdataschema} as previously outlined, visualises what data is available in the Data Centre. Specifically, data from 2017 was used as an initial testing sandbox for the data analysis. This allows the data for other years to be used to validate any findings. As the time series data is gathered in 5 minute intervals, this equates to 175,200 entries for the entire year. 
 
-In addition, specific monitoring data containing energy information from all 83 meter locations, LCP information for all 15 LCP locations and a11 weather variables were exported from the Data Centre. In total, for just 2017, that equated to over 210 million unique data entries, stored on three different csv files. 
+In addition, specific monitoring data containing energy information from all 83 meter locations, \gls{LCP} information for all 15 \gls{LCP} locations and a11 weather variables were exported from the Data Centre. In total, for just 2017, that equated to over 210 million unique data entries, stored on three different csv files. 
 
 \subsubsection{Understanding the Data}
 \label{subsubsec:[Understanding the Data]}
@@ -520,16 +525,17 @@ With such a vast array of information available, as earlier demonstrated in sect
   \caption{Schema of Data and Variables chosen for detailed Data Analysis}
   \label{fig:finalvariables}
   \centering
-    \includegraphics[scale=0.40]{"finalvariables".png}
+    \includegraphics[scale=0.40]{finalvariables}
 \end{figure} 
 
-While full definitions of the key variables are defined in the appendices - section \ref{sec:[Definition of key Variables]}, the following diagram describes and outlines the relationship between Real Energy Consumption, Reactive Energy Consumption, Apparent Energy Consumption and Power Factory. 
+%While full definitions of the key variables are defined in the appendices - section \ref{sec:[Definition of key Variables]}, the following diagram describes and outlines the relationship between Real Energy Consumption, Reactive Energy Consumption, Apparent Energy Consumption and Power Factor. 
+While full definitions of the key variables are defined in the appendices - section \ref{sec:[Definition of key Variables]}, the following diagram describes and outlines the relationship between \gls{Real}, \gls{Reactive}, \gls{Apparent} and \gls{Power}. 
 
 \begin{figure}[h]
   \caption{The Latte Definition of Different Energy Metrics}
   \label{fig:coffeeenergyanaliogy}
   \centering
-    \includegraphics[scale=0.50]{"power_explanation".png}
+    \includegraphics[scale=0.50]{power_explanation}
 \end{figure} 
 
 \subsubsection{Manipulate Data in Python}
@@ -541,7 +547,7 @@ With the data now gathered from the Data Centre, and the key variables identifie
 \item Import csv's to Python.
 \item Streamline data to only include selected variables. 
 \item Use Pivot Tables to generate data based on the DC Reading time for every location and associated variable. 
-\item Merge all energy, LCP and weather information together to create a master table of all data based on the 5 minute interval values (merged on DC Reading Time).
+\item Merge all energy, \gls{LCP} and weather information together to create a master table of all data based on the 5 minute interval values (merged on DC Reading Time).
 \item Generate correlations based on the created time series for all 690 variables.
 \item This created nearly 240,000 correlations. From this Python was Instructed to export the top 45,000 correlations for further analysis
 \end{enumerate} 
@@ -559,9 +565,9 @@ Some correlations between variables were easily explained, such as the relations
 \item There is a strong correlation between Humidity (but not temperature) and Real Energy Consumption, Apparent Energy Consumption and Reactive Energy Consumption.
 \item There is a high correlation between Apparent Energy Consumption and Real Energy Consumption. This indicates that there is a relatively stable amount of reactive power generated at each meter.
 \item There is a high amount of correlation between Real power total and Last time kw.
-\item In terms of analysing the different performances of the chillers, out of 2103 correlations, 2089 are identical for both Chiller 1 and chiller 2. The main difference centres around some correlations for chiller 2 and the LCP Cooling capacity and server temp differences between cabinets 23/24 and 25/26.
+\item In terms of analysing the different performances of the chillers, out of 2103 correlations, 2089 are identical for both Chiller 1 and Chiller 2. The main difference centres around some correlations for Chiller 2 and the \gls{LCP} and server temp differences between cabinets 23/24 and 25/26.
 \item Similarly, the water in temp and server in temp of the locations (between cabinets 23/24, 24/25, and 25/26) is highly correlated with the water in temp and server in temp of some locations between rows 2,3 and 4.
-\item In terms of cross-correlations between meter id’s and LCP locations, there is a high correlation between Real Energy Consumption of most meter id’s and 5 particular LCP variables that is very consistent.
+\item In terms of cross-correlations between meter id’s and LCP locations, there is a high correlation between Real Energy Consumption of most meter id’s and 5 particular \gls{LCP} variables that is very consistent.
 \end{itemize}  
 
 Full details of the correlation analysis, including a definition of the key variables discussed are found in the Appendices - sections \ref{sec:[Definition of key Variables]} and \ref{sec:[Correlation Analysis Results]}
@@ -585,7 +591,7 @@ As per the \ref{subsec:[Research Questions]}, there are two distinct aspects of 
 
 From the correlation analysis, the main variables to build such a model would be humidity, The server temp diff Row 3 - Outer edge of Cab 12, water flow Between Cab 23 and Cab 24 and lcp cooling capacity Between Cab 23, Cab 24 and Cab 25
 
-In terms of anomaly detection, in general, regression would be used to investigate if residuals either structure or isolated large deviations, which would warrant further investigation. 
+In terms of anomaly detection, in general, regression would be used to investigate if residuals have either structure or isolated large deviations, which would warrant further investigation. 
 
 \subsection{Remaining Work To Do}
 \label{subsec:[Remaining Work To Do]}
@@ -639,7 +645,7 @@ Finally, in terms of the reasoning applied, this project with Data Mining at its
 \newpage
 \printbibliography[heading=bibintoc]
 \newpage
-\glsaddall
+%\glsaddall
 \printglossary
 \newpage
 \appendix
@@ -650,8 +656,10 @@ Finally, in terms of the reasoning applied, this project with Data Mining at its
 \label{sec:[MySQL Queries]}
 This section provides the MySQL queries used to source the data for the line charts in Figures \ref{fig:Annualenergyfigure}, \ref{fig:Dailyenergyfigure}, \ref{fig:cabvchillerfigure}, \ref{fig:annualwaterfigure} and \ref{fig:opheliafigure}.
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={MySQL Query for Annual Energy Consumption},label={list:[Annual Energy Consumption]}]
+%\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
+%  caption={MySQL Query for Annual Energy Consumption},label={list:[Annual Energy Consumption]}]
+\begin{listing}[ht]
+\begin{minted}{sql}
 use dc; 
 select * 
 from meters_data
@@ -660,7 +668,11 @@ and meter_reading_time < '2017-12-31'
 and HOUR(`meter_reading_time`) = 9
 and meter_id not in ('1','2','3','4','5','6','7','8','9','10','11',
  '12','77','78');
-\end{lstlisting}
+\end{minted}
+\caption{MySQL Query for Annual Energy Consumption}
+\label{list:[Annual Energy Consumption]}
+\end{listing}
+%\end{lstlisting}
 
 \begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
   caption={MySQL Query for Daily Energy Consumption},label={list:[Daily Energy Consumption]}]
@@ -754,8 +766,10 @@ and weather_reading_time < '2017-12-31';
 \label{sec:[Python Code]}
 This section provides Python code to cleanse, manipulate and derive correlations the data in section \ref{subsubsec:[Manipulate Data in Python]}
 
-\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
-  caption={Python - Set Up and Configuration},label={list:[Python - Set up and Configuration]}]
+%\begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
+%  caption={Python - Set Up and Configuration},label={list:[Python - Set up and Configuration]}]
+\begin{listing}
+\begin{minted}{python}
 import numpy as np
 import pandas as pd
 pd.options.display.max_rows = 1000
@@ -770,7 +784,11 @@ import sys, os, glob
 def size(obj):
 """Return size of object in MB"""
 return "{0:.2f} MB".format(sys.getsizeof(obj) / (1000 * 1000))
-\end{lstlisting}
+\end{minted}
+\caption{Python - Set Up and Configuration}
+\label{list:[Python - Set up and Configuration]}
+\end{listing}
+%\end{lstlisting}
 
 \begin{lstlisting}[frame=single,basicstyle=\footnotesize\ttfamily,
   caption={Python - Import and Cleanse Energy Data},label={list:[Import and Merge Data]}]
@@ -1038,7 +1056,7 @@ This section provides definitions of key variables as discussed in section \ref{
   \caption{Definition of key Variables from the Monitoring Data}
   \label{fig:key_variables}
   \centering
-    \includegraphics[scale=0.75]{"key_variables".png}
+    \includegraphics[scale=0.75]{key_variables}
 \end{figure} 
 
 
@@ -1054,14 +1072,14 @@ This section provides the detailed correlation analysis as outlined in section \
   \caption{The Detailed Correlation Analysis Results - section 1}
   \label{fig:Correlation_Analysis_1}
   \centering
-    \includegraphics[scale=0.50]{"Correlation_Analysis_1".png}
+    \includegraphics[scale=0.50]{Correlation_Analysis_1}
 \end{figure} 
 
 \begin{figure}[h]
   \caption{The Detailed Correlation Analysis Results - section 2}
   \label{fig:Correlation_Analysis_2}
   \centering
-    \includegraphics[scale=0.50]{"Correlation_Analysis_2".png}
+    \includegraphics[scale=0.50]{Correlation_Analysis_2}
 \end{figure} 
 
 
